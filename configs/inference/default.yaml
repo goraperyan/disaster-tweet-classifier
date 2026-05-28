@@ -1,0 +1,4 @@
+threshold: 0.5
+runtime: pytorch
+model_version: bertweet-v1
+batch_size: 1

@@ -1,0 +1,19 @@
+defaults:
+  - data: kaggle_disaster_tweets
+  - preprocessing: bertweet
+  - model: bertweet
+  - training: default
+  - inference: default
+  - serving: fastapi
+  - logging: mlflow
+  - export: onnx
+  - _self_
+
+project:
+  name: disaster-tweet-classifier
+  seed: 42
+
+paths:
+  data_dir: data
+  artifacts_dir: artifacts
+  plots_dir: plots

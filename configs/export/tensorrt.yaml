@@ -1,0 +1,5 @@
+enabled: false
+onnx_model_path: artifacts/models/bertweet/onnx/model.onnx
+engine_output_path: artifacts/models/bertweet/tensorrt/model.plan
+precision: fp16
+max_batch_size: 16

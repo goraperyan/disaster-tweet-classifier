@@ -1,0 +1,8 @@
+name: baseline_text_cleaning
+lowercase: true
+replace_urls: true
+replace_mentions: true
+normalize_whitespace: true
+remove_html_entities: true
+remove_punctuation: false
+remove_stopwords: false

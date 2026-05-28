@@ -1,0 +1,11 @@
+seed: 42
+batch_size: 16
+num_workers: 2
+max_epochs: 3
+learning_rate: 0.00002
+weight_decay: 0.01
+warmup_ratio: 0.1
+gradient_clip_val: 1.0
+early_stopping_patience: 2
+monitor_metric: val_f1
+monitor_mode: max

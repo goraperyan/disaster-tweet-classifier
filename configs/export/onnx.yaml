@@ -1,0 +1,3 @@
+opset_version: 17
+output_path: artifacts/models/bertweet/onnx/model.onnx
+dynamic_axes: true

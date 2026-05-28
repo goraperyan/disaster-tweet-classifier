@@ -1,0 +1,17 @@
+name: kaggle_disaster_tweets
+raw_dir: data/raw
+interim_dir: data/interim
+processed_dir: data/processed
+
+train_file: train.csv
+test_file: test.csv
+sample_submission_file: sample_submission.csv
+
+text_column: text
+target_column: target
+id_column: id
+keyword_column: keyword
+location_column: location
+
+validation_size: 0.2
+num_folds: 5
