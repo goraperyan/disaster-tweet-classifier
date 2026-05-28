@@ -1,3 +1,31 @@
+# Data
+data/raw/*
+data/interim/*
+data/processed/*
+
+# Keep directory placeholders
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# Keep DVC metadata and DVC-generated ignore files
+!data/raw/*.dvc
+!data/interim/*.dvc
+!data/processed/*.dvc
+!data/raw/.gitignore
+!data/interim/.gitignore
+!data/processed/.gitignore
+
+# Artifacts
+artifacts/models/*
+artifacts/predictions/*
+!artifacts/models/.gitkeep
+!artifacts/predictions/.gitkeep
+
+# Plots
+plots/*
+!plots/.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

@@ -1,1 +1,12 @@
-stages: {}
+stages:
+  prepare_folds:
+    cmd: uv run disaster-tweet prepare-folds
+    deps:
+      - data/raw/train.csv
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/data/loading.py
+      - disaster_tweet_classifier/data/splitting.py
+      - configs/config.yaml
+      - configs/data/kaggle_disaster_tweets.yaml
+    outs:
+      - data/processed/train_folds.csv

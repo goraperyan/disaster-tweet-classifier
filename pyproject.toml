@@ -7,6 +7,7 @@ requires-python = ">=3.11,<3.12"
 authors = [
     { name = "Gor Aperyan" }
 ]
+
 dependencies = [
     "fastapi>=0.115.0,<1.0.0",
     "uvicorn[standard]>=0.30.0,<1.0.0",
@@ -20,6 +21,7 @@ dependencies = [
     "numpy>=1.26.0,<2.0.0",
     "pandas>=2.2.0,<3.0.0",
     "scikit-learn>=1.5.0,<2.0.0",
+    "dvc>=3.55.0,<4.0.0",
 ]
 
 [project.scripts]
