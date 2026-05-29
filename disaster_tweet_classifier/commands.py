@@ -281,6 +281,22 @@ class Commands:
         console.print("[bold green]Submission created successfully.[/bold green]")
         console.print(f"Submission saved to: {output_path}")
 
+    def serve_api(
+        self,
+        host: str = "0.0.0.0",  # noqa: S104
+        port: int = 8000,
+        reload: bool = False,
+    ) -> None:
+        """Serve FastAPI inference API."""
+        import uvicorn
+
+        uvicorn.run(
+            "disaster_tweet_classifier.api.app:app",
+            host=host,
+            port=port,
+            reload=reload,
+        )
+
 
 def main() -> None:
     fire.Fire(Commands)
