@@ -17,6 +17,7 @@ from disaster_tweet_classifier.data.loading import (
     validate_train_data,
 )
 from disaster_tweet_classifier.data.splitting import add_stratified_folds
+from disaster_tweet_classifier.inference.onnx_export import export_bertweet_to_onnx
 from disaster_tweet_classifier.inference.predictor import create_submission
 from disaster_tweet_classifier.preprocessing.datasets import (
     add_clean_text_column,
@@ -296,6 +297,37 @@ class Commands:
             port=port,
             reload=reload,
         )
+
+    def export_onnx(
+        self,
+        checkpoint_path: str | None = None,
+        output_path: str = "artifacts/onnx/bertweet/model.onnx",
+        metadata_path: str = "artifacts/onnx/bertweet/metadata.json",
+        opset_version: int = 17,
+    ) -> None:
+        """Export trained BERTweet classifier to ONNX."""
+        config = load_config(
+            overrides=[
+                "model=bertweet",
+                "training=bertweet",
+                "preprocessing=bertweet",
+            ]
+        )
+
+        resolved_checkpoint_path = Path(
+            checkpoint_path or config.training.inference.checkpoint_path
+        )
+
+        export_bertweet_to_onnx(
+            config=config,
+            checkpoint_path=resolved_checkpoint_path,
+            output_path=Path(output_path),
+            metadata_path=Path(metadata_path),
+            opset_version=opset_version,
+        )
+
+        print(f"ONNX model saved to: {output_path}")
+        print(f"ONNX metadata saved to: {metadata_path}")
 
 
 def main() -> None:

@@ -96,3 +96,18 @@ stages:
       - configs/preprocessing/bertweet.yaml
     outs:
       - artifacts/submissions/bertweet_submission.csv
+
+  export_onnx:
+    cmd: uv run disaster-tweet export-onnx
+    deps:
+      - artifacts/models/bertweet/checkpoints
+      - configs/config.yaml
+      - configs/model/bertweet.yaml
+      - configs/training/bertweet.yaml
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/inference/onnx_export.py
+      - disaster_tweet_classifier/inference/predictor.py
+      - disaster_tweet_classifier/models/transformer_classifier.py
+    outs:
+      - artifacts/onnx/bertweet/model.onnx
+      - artifacts/onnx/bertweet/metadata.json

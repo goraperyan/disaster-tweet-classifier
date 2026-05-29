@@ -37,6 +37,9 @@ artifacts/submissions/*
 artifacts/predictions/*
 !artifacts/predictions/.gitkeep
 
+artifacts/onnx/*
+!artifacts/onnx/.gitkeep
+
 # Plots
 plots/*
 !plots/.gitkeep
