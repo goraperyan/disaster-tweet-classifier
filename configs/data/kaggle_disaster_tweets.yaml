@@ -21,3 +21,5 @@ fold_column: fold
 
 train_folds_file: train_folds.csv
 train_folds_clean_file: train_folds_clean.csv
+
+train_folds_baseline_clean_file: train_folds_baseline_clean.csv

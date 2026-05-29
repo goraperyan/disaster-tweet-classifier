@@ -23,3 +23,33 @@ stages:
       - configs/preprocessing/bertweet.yaml
     outs:
       - data/processed/train_folds_clean.csv
+
+  prepare_baseline_data:
+    cmd: uv run disaster-tweet prepare-baseline-data
+    deps:
+      - data/processed/train_folds.csv
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/preprocessing/text_cleaning.py
+      - disaster_tweet_classifier/preprocessing/datasets.py
+      - configs/config.yaml
+      - configs/data/kaggle_disaster_tweets.yaml
+      - configs/preprocessing/baseline.yaml
+    outs:
+      - data/processed/train_folds_baseline_clean.csv
+
+  train_baseline:
+    cmd: uv run disaster-tweet train-baseline
+    deps:
+      - data/processed/train_folds_baseline_clean.csv
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/models/baseline.py
+      - disaster_tweet_classifier/training/baseline_trainer.py
+      - disaster_tweet_classifier/training/metrics.py
+      - disaster_tweet_classifier/utils/serialization.py
+      - configs/config.yaml
+      - configs/data/kaggle_disaster_tweets.yaml
+      - configs/model/baseline_logreg.yaml
+      - configs/training/baseline.yaml
+    outs:
+      - artifacts/models/baseline/model.joblib
+      - artifacts/models/baseline/metrics.json

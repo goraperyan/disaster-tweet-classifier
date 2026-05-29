@@ -21,14 +21,19 @@ from disaster_tweet_classifier.preprocessing.datasets import (
     build_text_cleaning_config,
     save_processed_dataframe,
 )
+from disaster_tweet_classifier.training.baseline_trainer import train_and_save_baseline_model
 
 console = Console()
 
 
-def load_config(config_path: str = "../configs", config_name: str = "config") -> DictConfig:
+def load_config(
+    config_path: str = "../configs",
+    config_name: str = "config",
+    overrides: list[str] | None = None,
+) -> DictConfig:
     """Load Hydra config for CLI commands."""
     with initialize(version_base=None, config_path=config_path):
-        return compose(config_name=config_name)
+        return compose(config_name=config_name, overrides=overrides or [])
 
 
 def _print_validation_report(dataset_name: str, report: object) -> None:
@@ -121,6 +126,69 @@ class Commands:
         save_processed_dataframe(dataframe=processed_dataframe, output_path=output_path)
 
         console.print(f"[bold green]Saved cleaned data to:[/bold green] {output_path}")
+
+    def train_baseline(self) -> None:
+        """Train TF-IDF + Logistic Regression baseline model."""
+        config = load_config(
+            overrides=[
+                "model=baseline_logreg",
+                "training=baseline",
+                "preprocessing=baseline",
+            ]
+        )
+
+        input_path = Path(config.data.processed_dir) / config.data.train_folds_baseline_clean_file
+        model_output_path = Path(config.training.outputs.model_path)
+        metrics_output_path = Path(config.training.outputs.metrics_path)
+
+        if not input_path.exists():
+            message = (
+                f"Input file `{input_path}` does not exist. "
+                "Run `uv run disaster-tweet prepare-clean-data` first."
+            )
+            raise FileNotFoundError(message)
+
+        metrics = train_and_save_baseline_model(
+            config=config,
+            input_path=input_path,
+            model_output_path=model_output_path,
+            metrics_output_path=metrics_output_path,
+            validation_fold=config.training.validation_fold,
+        )
+
+        console.print("[bold green]Baseline model trained successfully.[/bold green]")
+        console.print(f"Model saved to: {model_output_path}")
+        console.print(f"Metrics saved to: {metrics_output_path}")
+        console.print(metrics.to_dict())
+
+    def prepare_baseline_data(self) -> None:
+        """Create cleaned processed dataset for baseline model."""
+        config = load_config(overrides=["preprocessing=baseline"])
+
+        processed_dir = Path(config.data.processed_dir)
+        input_path = processed_dir / config.data.train_folds_file
+        output_path = processed_dir / "train_folds_baseline_clean.csv"
+
+        if not input_path.exists():
+            message = (
+                f"Input file `{input_path}` does not exist. "
+                "Run `uv run disaster-tweet prepare-folds` first."
+            )
+            raise FileNotFoundError(message)
+
+        dataframe = pd.read_csv(input_path)
+        cleaning_config = build_text_cleaning_config(config=config)
+
+        processed_dataframe = add_clean_text_column(
+            dataframe=dataframe,
+            text_column=config.data.text_column,
+            clean_text_column=config.data.clean_text_column,
+            cleaning_config=cleaning_config,
+        )
+
+        save_processed_dataframe(dataframe=processed_dataframe, output_path=output_path)
+
+        console.print(f"[bold green]Saved baseline cleaned data to:[/bold green] {output_path}")
 
 
 def main() -> None:

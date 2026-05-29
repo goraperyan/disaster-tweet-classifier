@@ -9,16 +9,16 @@ stages:
       size: 331
     - path: configs/data/kaggle_disaster_tweets.yaml
       hash: md5
-      md5: 2c79cd6e48465272c468592cc3ee570a
-      size: 462
+      md5: 90ea8322e15e59d76ff86f6daa6497b8
+      size: 527
     - path: data/raw/train.csv
       hash: md5
       md5: f147942c91d00d754503775341d13682
       size: 987712
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 4d5e43228443dc1ba7d9f23cccf02f0f
-      size: 4488
+      md5: 021d904de51dda6d185e0509f0c0e0fe
+      size: 7176
     - path: disaster_tweet_classifier/data/loading.py
       hash: md5
       md5: caec6269c244cfdbbeb4c75c9d745059
@@ -41,8 +41,8 @@ stages:
       size: 331
     - path: configs/data/kaggle_disaster_tweets.yaml
       hash: md5
-      md5: 2c79cd6e48465272c468592cc3ee570a
-      size: 462
+      md5: 90ea8322e15e59d76ff86f6daa6497b8
+      size: 527
     - path: configs/preprocessing/bertweet.yaml
       hash: md5
       md5: cad7afc0c9a831c35a8d646a8d4c2b09
@@ -53,8 +53,8 @@ stages:
       size: 1002943
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 4d5e43228443dc1ba7d9f23cccf02f0f
-      size: 4488
+      md5: 021d904de51dda6d185e0509f0c0e0fe
+      size: 7176
     - path: disaster_tweet_classifier/preprocessing/datasets.py
       hash: md5
       md5: 437677d428433dc257e1701e3d97ed2a
@@ -68,3 +68,91 @@ stages:
       hash: md5
       md5: f7c0be861946352ca7717ee31f88b472
       size: 1690315
+  prepare_baseline_data:
+    cmd: uv run disaster-tweet prepare-baseline-data
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: cbae5ec10c96897028110f9baf2d2d95
+      size: 331
+    - path: configs/data/kaggle_disaster_tweets.yaml
+      hash: md5
+      md5: 90ea8322e15e59d76ff86f6daa6497b8
+      size: 527
+    - path: configs/preprocessing/baseline.yaml
+      hash: md5
+      md5: 11147e1da10ecbd47b9fe8415603543e
+      size: 191
+    - path: data/processed/train_folds.csv
+      hash: md5
+      md5: 307be2dee9b5aa84ec9a18d7d153707e
+      size: 1002943
+    - path: disaster_tweet_classifier/commands.py
+      hash: md5
+      md5: 021d904de51dda6d185e0509f0c0e0fe
+      size: 7176
+    - path: disaster_tweet_classifier/preprocessing/datasets.py
+      hash: md5
+      md5: 437677d428433dc257e1701e3d97ed2a
+      size: 1538
+    - path: disaster_tweet_classifier/preprocessing/text_cleaning.py
+      hash: md5
+      md5: a8ecd521227c5f1c29a8a0d87b83d090
+      size: 1492
+    outs:
+    - path: data/processed/train_folds_baseline_clean.csv
+      hash: md5
+      md5: c961918c9249e35d95227ede451b3ec6
+      size: 1690315
+  train_baseline:
+    cmd: uv run disaster-tweet train-baseline
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: cbae5ec10c96897028110f9baf2d2d95
+      size: 331
+    - path: configs/data/kaggle_disaster_tweets.yaml
+      hash: md5
+      md5: 90ea8322e15e59d76ff86f6daa6497b8
+      size: 527
+    - path: configs/model/baseline_logreg.yaml
+      hash: md5
+      md5: 44b2faae0d00d8d4654d9f3eb46e20bb
+      size: 215
+    - path: configs/training/baseline.yaml
+      hash: md5
+      md5: ff525df03ca9c2428878d94e205caa8c
+      size: 136
+    - path: data/processed/train_folds_baseline_clean.csv
+      hash: md5
+      md5: c961918c9249e35d95227ede451b3ec6
+      size: 1690315
+    - path: disaster_tweet_classifier/commands.py
+      hash: md5
+      md5: 021d904de51dda6d185e0509f0c0e0fe
+      size: 7176
+    - path: disaster_tweet_classifier/models/baseline.py
+      hash: md5
+      md5: 2997407d8a26b925a08adf09e116560e
+      size: 922
+    - path: disaster_tweet_classifier/training/baseline_trainer.py
+      hash: md5
+      md5: e8a9073915fef1f518da4ee93ca176a0
+      size: 2662
+    - path: disaster_tweet_classifier/training/metrics.py
+      hash: md5
+      md5: 9324aa6797a34e40568d8f4c8fabcc2f
+      size: 1292
+    - path: disaster_tweet_classifier/utils/serialization.py
+      hash: md5
+      md5: 74a4ed0bb2595a986abe469e6a90afff
+      size: 769
+    outs:
+    - path: artifacts/models/baseline/metrics.json
+      hash: md5
+      md5: 50bef0d007cebde572cf9b7584dd5acb
+      size: 165
+    - path: artifacts/models/baseline/model.joblib
+      hash: md5
+      md5: 0e621ef34d0f6cfec2c12669ab75d9bc
+      size: 685188

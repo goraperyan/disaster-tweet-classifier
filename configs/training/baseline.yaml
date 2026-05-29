@@ -1,0 +1,5 @@
+validation_fold: 0
+
+outputs:
+  model_path: artifacts/models/baseline/model.joblib
+  metrics_path: artifacts/models/baseline/metrics.json
