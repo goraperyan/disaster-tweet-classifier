@@ -20,10 +20,19 @@ data/processed/*
 !data/processed/.gitignore
 
 # Artifacts
+artifacts/*
+!artifacts/models/
+!artifacts/submissions/
+
 artifacts/models/*
-artifacts/predictions/*
+!artifacts/models/*.dvc
+!artifacts/models/.gitignore
 !artifacts/models/.gitkeep
-!artifacts/predictions/.gitkeep
+
+artifacts/submissions/*
+!artifacts/submissions/*.dvc
+!artifacts/submissions/.gitignore
+!artifacts/submissions/.gitkeepы
 
 # Plots
 plots/*

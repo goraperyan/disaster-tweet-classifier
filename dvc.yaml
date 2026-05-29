@@ -93,5 +93,6 @@ stages:
       - configs/data/kaggle_disaster_tweets.yaml
       - configs/model/bertweet.yaml
       - configs/training/bertweet.yaml
+      - configs/preprocessing/bertweet.yaml
     outs:
       - artifacts/submissions/bertweet_submission.csv
