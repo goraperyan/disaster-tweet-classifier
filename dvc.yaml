@@ -45,6 +45,9 @@ stages:
       - disaster_tweet_classifier/models/baseline.py
       - disaster_tweet_classifier/training/baseline_trainer.py
       - disaster_tweet_classifier/training/metrics.py
+      - disaster_tweet_classifier/training/plots.py
+      - disaster_tweet_classifier/tracking/git.py
+      - disaster_tweet_classifier/tracking/mlflow_tracking.py
       - disaster_tweet_classifier/utils/serialization.py
       - configs/config.yaml
       - configs/data/kaggle_disaster_tweets.yaml
@@ -53,3 +56,4 @@ stages:
     outs:
       - artifacts/models/baseline/model.joblib
       - artifacts/models/baseline/metrics.json
+      - plots/baseline

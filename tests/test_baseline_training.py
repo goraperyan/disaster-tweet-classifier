@@ -32,13 +32,13 @@ def test_train_baseline_model_returns_metrics() -> None:
         }
     )
 
-    _, metrics = train_baseline_model(
+    result = train_baseline_model(
         config=config,
         dataframe=dataframe,
         validation_fold=0,
     )
 
-    metrics_dict = metrics.to_dict()
+    metrics_dict = result.metrics.to_dict()
 
     assert set(metrics_dict) == {"accuracy", "precision", "recall", "f1", "roc_auc"}
     assert all(0.0 <= value <= 1.0 for value in metrics_dict.values())

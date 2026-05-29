@@ -17,8 +17,8 @@ stages:
       size: 987712
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 021d904de51dda6d185e0509f0c0e0fe
-      size: 7176
+      md5: 426e8d1400f1a5b41902e46f57f5e120
+      size: 8250
     - path: disaster_tweet_classifier/data/loading.py
       hash: md5
       md5: caec6269c244cfdbbeb4c75c9d745059
@@ -53,8 +53,8 @@ stages:
       size: 1002943
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 021d904de51dda6d185e0509f0c0e0fe
-      size: 7176
+      md5: 426e8d1400f1a5b41902e46f57f5e120
+      size: 8250
     - path: disaster_tweet_classifier/preprocessing/datasets.py
       hash: md5
       md5: 437677d428433dc257e1701e3d97ed2a
@@ -89,8 +89,8 @@ stages:
       size: 1002943
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 021d904de51dda6d185e0509f0c0e0fe
-      size: 7176
+      md5: 426e8d1400f1a5b41902e46f57f5e120
+      size: 8250
     - path: disaster_tweet_classifier/preprocessing/datasets.py
       hash: md5
       md5: 437677d428433dc257e1701e3d97ed2a
@@ -121,28 +121,40 @@ stages:
       size: 215
     - path: configs/training/baseline.yaml
       hash: md5
-      md5: ff525df03ca9c2428878d94e205caa8c
-      size: 136
+      md5: 92fdde315723ff4f4af7bd9d30cef5ce
+      size: 270
     - path: data/processed/train_folds_baseline_clean.csv
       hash: md5
       md5: c961918c9249e35d95227ede451b3ec6
       size: 1690315
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 021d904de51dda6d185e0509f0c0e0fe
-      size: 7176
+      md5: 426e8d1400f1a5b41902e46f57f5e120
+      size: 8250
     - path: disaster_tweet_classifier/models/baseline.py
       hash: md5
       md5: 2997407d8a26b925a08adf09e116560e
       size: 922
+    - path: disaster_tweet_classifier/tracking/git.py
+      hash: md5
+      md5: 4cb6b266eeca205ec81f93230d466e8e
+      size: 455
+    - path: disaster_tweet_classifier/tracking/mlflow_tracking.py
+      hash: md5
+      md5: 44ddab965df89e56887f66c02988d64c
+      size: 1936
     - path: disaster_tweet_classifier/training/baseline_trainer.py
       hash: md5
-      md5: e8a9073915fef1f518da4ee93ca176a0
-      size: 2662
+      md5: 29495c40de2fd03a4739ea3b8cf68418
+      size: 4406
     - path: disaster_tweet_classifier/training/metrics.py
       hash: md5
       md5: 9324aa6797a34e40568d8f4c8fabcc2f
       size: 1292
+    - path: disaster_tweet_classifier/training/plots.py
+      hash: md5
+      md5: d6850b34c9b439461fdc075939bbc78b
+      size: 1895
     - path: disaster_tweet_classifier/utils/serialization.py
       hash: md5
       md5: 74a4ed0bb2595a986abe469e6a90afff
@@ -154,5 +166,10 @@ stages:
       size: 165
     - path: artifacts/models/baseline/model.joblib
       hash: md5
-      md5: 0e621ef34d0f6cfec2c12669ab75d9bc
+      md5: 7b37af91361862f4e482779c2e1f0a94
       size: 685188
+    - path: plots/baseline
+      hash: md5
+      md5: fe96d7c78c9f310ce5a6583030d8a5fe.dir
+      size: 117296
+      nfiles: 3

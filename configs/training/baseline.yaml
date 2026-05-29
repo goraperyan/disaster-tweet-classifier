@@ -3,3 +3,9 @@ validation_fold: 0
 outputs:
   model_path: artifacts/models/baseline/model.joblib
   metrics_path: artifacts/models/baseline/metrics.json
+  plots_dir: plots/baseline
+
+mlflow:
+  tracking_uri: mlruns
+  experiment_name: disaster_tweet_classifier
+  run_name: baseline_logreg

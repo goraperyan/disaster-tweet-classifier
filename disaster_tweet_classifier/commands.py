@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import fire
+import mlflow
 import pandas as pd
 from hydra import compose, initialize
 from omegaconf import DictConfig, OmegaConf
@@ -20,6 +21,13 @@ from disaster_tweet_classifier.preprocessing.datasets import (
     add_clean_text_column,
     build_text_cleaning_config,
     save_processed_dataframe,
+)
+from disaster_tweet_classifier.tracking.git import get_git_commit_hash
+from disaster_tweet_classifier.tracking.mlflow_tracking import (
+    configure_mlflow,
+    log_artifacts,
+    log_config_params,
+    log_metrics,
 )
 from disaster_tweet_classifier.training.baseline_trainer import train_and_save_baseline_model
 
@@ -140,26 +148,49 @@ class Commands:
         input_path = Path(config.data.processed_dir) / config.data.train_folds_baseline_clean_file
         model_output_path = Path(config.training.outputs.model_path)
         metrics_output_path = Path(config.training.outputs.metrics_path)
+        plots_dir = Path(config.training.outputs.plots_dir)
 
         if not input_path.exists():
             message = (
                 f"Input file `{input_path}` does not exist. "
-                "Run `uv run disaster-tweet prepare-clean-data` first."
+                "Run `uv run disaster-tweet prepare-baseline-data` first."
             )
             raise FileNotFoundError(message)
 
-        metrics = train_and_save_baseline_model(
-            config=config,
-            input_path=input_path,
-            model_output_path=model_output_path,
-            metrics_output_path=metrics_output_path,
-            validation_fold=config.training.validation_fold,
+        configure_mlflow(
+            tracking_uri=config.training.mlflow.tracking_uri,
+            experiment_name=config.training.mlflow.experiment_name,
         )
+
+        git_commit_hash = get_git_commit_hash()
+
+        with mlflow.start_run(run_name=config.training.mlflow.run_name):
+            mlflow.log_param("git_commit_hash", git_commit_hash)
+            log_config_params(config=config)
+
+            result = train_and_save_baseline_model(
+                config=config,
+                input_path=input_path,
+                model_output_path=model_output_path,
+                metrics_output_path=metrics_output_path,
+                plots_dir=plots_dir,
+                validation_fold=config.training.validation_fold,
+            )
+
+            log_metrics(metrics=result.metrics.to_dict())
+            log_artifacts(
+                paths=[
+                    model_output_path,
+                    metrics_output_path,
+                    plots_dir,
+                ]
+            )
 
         console.print("[bold green]Baseline model trained successfully.[/bold green]")
         console.print(f"Model saved to: {model_output_path}")
         console.print(f"Metrics saved to: {metrics_output_path}")
-        console.print(metrics.to_dict())
+        console.print(f"Plots saved to: {plots_dir}")
+        console.print(result.metrics.to_dict())
 
     def prepare_baseline_data(self) -> None:
         """Create cleaned processed dataset for baseline model."""
