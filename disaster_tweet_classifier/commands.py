@@ -3,8 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 
 import fire
+import pandas as pd
 from hydra import compose, initialize
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 from rich.console import Console
 from rich.table import Table
 
@@ -15,6 +16,11 @@ from disaster_tweet_classifier.data.loading import (
     validate_train_data,
 )
 from disaster_tweet_classifier.data.splitting import add_stratified_folds
+from disaster_tweet_classifier.preprocessing.datasets import (
+    add_clean_text_column,
+    build_text_cleaning_config,
+    save_processed_dataframe,
+)
 
 console = Console()
 
@@ -81,11 +87,40 @@ class Commands:
     def show_config(self) -> None:
         """Print loaded Hydra config."""
         config = load_config()
-        console.print(config)
+        console.print(OmegaConf.to_yaml(config))
 
     def version(self) -> None:
         """Print CLI version."""
         console.print("[bold green]disaster-tweet-classifier version 0.1.0[/bold green]")
+
+    def prepare_clean_data(self) -> None:
+        """Create cleaned processed dataset from train folds."""
+        config = load_config()
+
+        processed_dir = Path(config.data.processed_dir)
+        input_path = processed_dir / config.data.train_folds_file
+        output_path = processed_dir / config.data.train_folds_clean_file
+
+        if not input_path.exists():
+            message = (
+                f"Input file `{input_path}` does not exist. "
+                "Run `uv run disaster-tweet prepare-folds` first."
+            )
+            raise FileNotFoundError(message)
+
+        dataframe = pd.read_csv(input_path)
+        cleaning_config = build_text_cleaning_config(config=config)
+
+        processed_dataframe = add_clean_text_column(
+            dataframe=dataframe,
+            text_column=config.data.text_column,
+            clean_text_column=config.data.clean_text_column,
+            cleaning_config=cleaning_config,
+        )
+
+        save_processed_dataframe(dataframe=processed_dataframe, output_path=output_path)
+
+        console.print(f"[bold green]Saved cleaned data to:[/bold green] {output_path}")
 
 
 def main() -> None:

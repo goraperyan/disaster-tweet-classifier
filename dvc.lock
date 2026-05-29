@@ -9,16 +9,16 @@ stages:
       size: 331
     - path: configs/data/kaggle_disaster_tweets.yaml
       hash: md5
-      md5: c6153a3c98ab19173d7d7260a5336f50
-      size: 332
+      md5: 2c79cd6e48465272c468592cc3ee570a
+      size: 462
     - path: data/raw/train.csv
       hash: md5
       md5: f147942c91d00d754503775341d13682
       size: 987712
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 52f8944ba817e4a89f95a43998473df5
-      size: 3156
+      md5: 4d5e43228443dc1ba7d9f23cccf02f0f
+      size: 4488
     - path: disaster_tweet_classifier/data/loading.py
       hash: md5
       md5: caec6269c244cfdbbeb4c75c9d745059
@@ -32,3 +32,39 @@ stages:
       hash: md5
       md5: 307be2dee9b5aa84ec9a18d7d153707e
       size: 1002943
+  prepare_clean_data:
+    cmd: uv run disaster-tweet prepare-clean-data
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: cbae5ec10c96897028110f9baf2d2d95
+      size: 331
+    - path: configs/data/kaggle_disaster_tweets.yaml
+      hash: md5
+      md5: 2c79cd6e48465272c468592cc3ee570a
+      size: 462
+    - path: configs/preprocessing/bertweet.yaml
+      hash: md5
+      md5: cad7afc0c9a831c35a8d646a8d4c2b09
+      size: 189
+    - path: data/processed/train_folds.csv
+      hash: md5
+      md5: 307be2dee9b5aa84ec9a18d7d153707e
+      size: 1002943
+    - path: disaster_tweet_classifier/commands.py
+      hash: md5
+      md5: 4d5e43228443dc1ba7d9f23cccf02f0f
+      size: 4488
+    - path: disaster_tweet_classifier/preprocessing/datasets.py
+      hash: md5
+      md5: 437677d428433dc257e1701e3d97ed2a
+      size: 1538
+    - path: disaster_tweet_classifier/preprocessing/text_cleaning.py
+      hash: md5
+      md5: a8ecd521227c5f1c29a8a0d87b83d090
+      size: 1492
+    outs:
+    - path: data/processed/train_folds_clean.csv
+      hash: md5
+      md5: f7c0be861946352ca7717ee31f88b472
+      size: 1690315

@@ -10,3 +10,16 @@ stages:
       - configs/data/kaggle_disaster_tweets.yaml
     outs:
       - data/processed/train_folds.csv
+
+  prepare_clean_data:
+    cmd: uv run disaster-tweet prepare-clean-data
+    deps:
+      - data/processed/train_folds.csv
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/preprocessing/text_cleaning.py
+      - disaster_tweet_classifier/preprocessing/datasets.py
+      - configs/config.yaml
+      - configs/data/kaggle_disaster_tweets.yaml
+      - configs/preprocessing/bertweet.yaml
+    outs:
+      - data/processed/train_folds_clean.csv
