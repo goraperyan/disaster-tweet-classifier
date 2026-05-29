@@ -288,7 +288,7 @@ class Commands:
         port: int = 8000,
         reload: bool = False,
     ) -> None:
-        """Serve FastAPI inference API."""
+        """Run FastAPI inference service."""
         import uvicorn
 
         uvicorn.run(

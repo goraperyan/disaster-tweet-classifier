@@ -25,4 +25,4 @@ COPY artifacts/models/bertweet ./artifacts/models/bertweet
 
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "disaster_tweet_classifier.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "--no-sync", "uvicorn", "disaster_tweet_classifier.api.app:app", "--host", "0.0.0.0", "--port", "8000"]

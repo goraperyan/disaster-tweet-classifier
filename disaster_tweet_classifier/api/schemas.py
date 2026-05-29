@@ -1,60 +1,41 @@
+"""Pydantic schemas for FastAPI inference service."""
+
 from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
 
-class HealthResponse(BaseModel):
-    """Health check response."""
-
-    status: str = Field(..., examples=["ok"])
-
-
-class ModelInfoResponse(BaseModel):
-    """Model information response."""
-
-    model_type: str
-    pretrained_model_name: str
-    checkpoint_path: str
-    device: str
-    threshold: float
-    max_length: int
-
-
-class PredictRequest(BaseModel):
-    """Single prediction request."""
+class PredictionRequest(BaseModel):
+    """Single tweet prediction request."""
 
     text: str = Field(
         ...,
         min_length=1,
+        description="Tweet text to classify.",
         examples=["Forest fire near La Ronge Sask. Canada"],
     )
 
 
 class PredictionResponse(BaseModel):
-    """Single prediction response."""
+    """Single tweet prediction response."""
 
-    label: int = Field(..., examples=[1])
-    label_name: str = Field(..., examples=["disaster"])
-    probability: float = Field(..., ge=0.0, le=1.0, examples=[0.91])
-    threshold: float = Field(..., ge=0.0, le=1.0, examples=[0.5])
-
-
-class BatchPredictRequest(BaseModel):
-    """Batch prediction request."""
-
-    texts: list[str] = Field(
-        ...,
-        min_length=1,
-        examples=[
-            [
-                "Forest fire near La Ronge Sask. Canada",
-                "I love sunny days",
-            ]
-        ],
-    )
+    text: str
+    label: int
+    label_name: str
+    probability: float
+    threshold: float
 
 
-class BatchPredictionResponse(BaseModel):
-    """Batch prediction response."""
+class HealthResponse(BaseModel):
+    """Health-check response."""
 
-    predictions: list[PredictionResponse]
+    status: str
+
+
+class ModelInfoResponse(BaseModel):
+    """Model metadata response."""
+
+    model_name: str
+    checkpoint_path: str
+    threshold: float
+    max_length: int
