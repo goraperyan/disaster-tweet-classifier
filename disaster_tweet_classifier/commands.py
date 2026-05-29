@@ -17,6 +17,7 @@ from disaster_tweet_classifier.data.loading import (
     validate_train_data,
 )
 from disaster_tweet_classifier.data.splitting import add_stratified_folds
+from disaster_tweet_classifier.inference.predictor import create_submission
 from disaster_tweet_classifier.preprocessing.datasets import (
     add_clean_text_column,
     build_text_cleaning_config,
@@ -245,6 +246,40 @@ class Commands:
 
         console.print("[bold green]BERTweet model trained successfully.[/bold green]")
         console.print(metrics)
+
+    def predict_submission(self) -> None:
+        """Create Kaggle submission using trained BERTweet checkpoint."""
+        config = load_config(
+            overrides=[
+                "model=bertweet",
+                "training=bertweet",
+                "preprocessing=bertweet",
+            ]
+        )
+
+        test_path = Path(config.data.raw_dir) / config.data.test_file
+        sample_submission_path = Path(config.data.raw_dir) / config.data.sample_submission_file
+        checkpoint_path = Path(config.training.inference.checkpoint_path)
+        output_path = Path(config.training.outputs.submission_path)
+
+        if not test_path.exists():
+            message = f"Test file `{test_path}` does not exist."
+            raise FileNotFoundError(message)
+
+        if not sample_submission_path.exists():
+            message = f"Sample submission file `{sample_submission_path}` does not exist."
+            raise FileNotFoundError(message)
+
+        output_path = create_submission(
+            config=config,
+            test_path=test_path,
+            sample_submission_path=sample_submission_path,
+            checkpoint_path=checkpoint_path,
+            output_path=output_path,
+        )
+
+        console.print("[bold green]Submission created successfully.[/bold green]")
+        console.print(f"Submission saved to: {output_path}")
 
 
 def main() -> None:

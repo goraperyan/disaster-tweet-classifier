@@ -1,7 +1,7 @@
 validation_fold: 0
 
-batch_size: 8
-num_workers: 0
+batch_size: 16
+num_workers: 2
 max_epochs: 2
 learning_rate: 0.00002
 weight_decay: 0.01
@@ -28,8 +28,13 @@ checkpoint:
 outputs:
   checkpoints_dir: artifacts/models/bertweet/checkpoints
   metrics_path: artifacts/models/bertweet/metrics.json
+  submission_path: artifacts/submissions/bertweet_submission.csv
 
 mlflow:
   tracking_uri: mlruns
   experiment_name: disaster_tweet_classifier
   run_name: bertweet_lightning
+
+inference:
+  checkpoint_path: artifacts/models/bertweet/checkpoints
+  threshold: 0.5

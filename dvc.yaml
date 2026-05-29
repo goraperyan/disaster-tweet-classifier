@@ -77,3 +77,21 @@ stages:
     outs:
       - artifacts/models/bertweet/checkpoints
       - artifacts/models/bertweet/metrics.json
+
+  predict_submission:
+    cmd: uv run disaster-tweet predict-submission
+    deps:
+      - data/raw/test.csv
+      - data/raw/sample_submission.csv
+      - artifacts/models/bertweet/checkpoints
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/inference/predictor.py
+      - disaster_tweet_classifier/data/torch_datasets.py
+      - disaster_tweet_classifier/models/transformer_classifier.py
+      - disaster_tweet_classifier/preprocessing/text_cleaning.py
+      - configs/config.yaml
+      - configs/data/kaggle_disaster_tweets.yaml
+      - configs/model/bertweet.yaml
+      - configs/training/bertweet.yaml
+    outs:
+      - artifacts/submissions/bertweet_submission.csv

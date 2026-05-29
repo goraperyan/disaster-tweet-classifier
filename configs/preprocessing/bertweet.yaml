@@ -1,8 +1,7 @@
-name: bertweet_light_cleaning
+# name: bertweet_light_cleaning
 lowercase: false
 replace_urls: true
 replace_mentions: true
 normalize_whitespace: true
 remove_html_entities: true
-preserve_hashtags: true
-preserve_emojis: true
+remove_punctuation: false

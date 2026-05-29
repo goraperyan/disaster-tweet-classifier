@@ -17,8 +17,8 @@ stages:
       size: 987712
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 426e8d1400f1a5b41902e46f57f5e120
-      size: 8250
+      md5: f760b4ae338625ac3323361897d8882a
+      size: 9179
     - path: disaster_tweet_classifier/data/loading.py
       hash: md5
       md5: caec6269c244cfdbbeb4c75c9d745059
@@ -53,8 +53,8 @@ stages:
       size: 1002943
     - path: disaster_tweet_classifier/commands.py
       hash: md5
-      md5: 426e8d1400f1a5b41902e46f57f5e120
-      size: 8250
+      md5: f760b4ae338625ac3323361897d8882a
+      size: 9179
     - path: disaster_tweet_classifier/preprocessing/datasets.py
       hash: md5
       md5: 437677d428433dc257e1701e3d97ed2a
@@ -173,3 +173,68 @@ stages:
       md5: fe96d7c78c9f310ce5a6583030d8a5fe.dir
       size: 117296
       nfiles: 3
+  train_bertweet:
+    cmd: uv run disaster-tweet train-bertweet
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: cbae5ec10c96897028110f9baf2d2d95
+      size: 331
+    - path: configs/data/kaggle_disaster_tweets.yaml
+      hash: md5
+      md5: 90ea8322e15e59d76ff86f6daa6497b8
+      size: 527
+    - path: configs/model/bertweet.yaml
+      hash: md5
+      md5: 5b2d4f559eb964872d108ff8afd4e3f0
+      size: 179
+    - path: configs/training/bertweet.yaml
+      hash: md5
+      md5: 31e44e2edd4a87668462e7583fd58067
+      size: 636
+    - path: data/processed/train_folds_clean.csv
+      hash: md5
+      md5: f7c0be861946352ca7717ee31f88b472
+      size: 1690315
+    - path: disaster_tweet_classifier/commands.py
+      hash: md5
+      md5: f760b4ae338625ac3323361897d8882a
+      size: 9179
+    - path: disaster_tweet_classifier/data/lightning_datamodule.py
+      hash: md5
+      md5: c98c4ae927cec1092aa8a51e0cdb0e9f
+      size: 3281
+    - path: disaster_tweet_classifier/data/torch_datasets.py
+      hash: md5
+      md5: bdd02bdc1254f726bfcb5214f895d270
+      size: 1466
+    - path: disaster_tweet_classifier/models/transformer_classifier.py
+      hash: md5
+      md5: 3f8fd8cae24a08604513d36997649d27
+      size: 5298
+    - path: disaster_tweet_classifier/tracking/git.py
+      hash: md5
+      md5: c5b8f18a59ad142909a3ee2f026f6171
+      size: 469
+    - path: disaster_tweet_classifier/training/metrics.py
+      hash: md5
+      md5: 9324aa6797a34e40568d8f4c8fabcc2f
+      size: 1292
+    - path: disaster_tweet_classifier/training/transformer_trainer.py
+      hash: md5
+      md5: 6405dc8e7cd38febde4e5eeaa3335a30
+      size: 3874
+    - path: disaster_tweet_classifier/utils/serialization.py
+      hash: md5
+      md5: 74a4ed0bb2595a986abe469e6a90afff
+      size: 769
+    outs:
+    - path: artifacts/models/bertweet/checkpoints
+      hash: md5
+      md5: 965a1445643b8b1998f2783c4979f675.dir
+      size: 1619074099
+      nfiles: 1
+    - path: artifacts/models/bertweet/metrics.json
+      hash: md5
+      md5: 2f3c3525d7d2773c4e0d6caf5bbc76fc
+      size: 531
