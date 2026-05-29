@@ -1,5 +1,11 @@
 name: bertweet
+
 pretrained_model_name: vinai/bertweet-base
 num_labels: 2
-max_length: 128
-dropout: 0.1
+dropout: 0.2
+freeze_backbone: false
+
+tokenizer:
+  max_length: 96
+  padding: max_length
+  truncation: true

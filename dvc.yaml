@@ -57,3 +57,23 @@ stages:
       - artifacts/models/baseline/model.joblib
       - artifacts/models/baseline/metrics.json
       - plots/baseline
+
+  train_bertweet:
+    cmd: uv run disaster-tweet train-bertweet
+    deps:
+      - data/processed/train_folds_clean.csv
+      - disaster_tweet_classifier/commands.py
+      - disaster_tweet_classifier/data/lightning_datamodule.py
+      - disaster_tweet_classifier/data/torch_datasets.py
+      - disaster_tweet_classifier/models/transformer_classifier.py
+      - disaster_tweet_classifier/training/transformer_trainer.py
+      - disaster_tweet_classifier/training/metrics.py
+      - disaster_tweet_classifier/tracking/git.py
+      - disaster_tweet_classifier/utils/serialization.py
+      - configs/config.yaml
+      - configs/data/kaggle_disaster_tweets.yaml
+      - configs/model/bertweet.yaml
+      - configs/training/bertweet.yaml
+    outs:
+      - artifacts/models/bertweet/checkpoints
+      - artifacts/models/bertweet/metrics.json

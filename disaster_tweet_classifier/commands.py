@@ -30,6 +30,7 @@ from disaster_tweet_classifier.tracking.mlflow_tracking import (
     log_metrics,
 )
 from disaster_tweet_classifier.training.baseline_trainer import train_and_save_baseline_model
+from disaster_tweet_classifier.training.transformer_trainer import train_transformer_model
 
 console = Console()
 
@@ -220,6 +221,30 @@ class Commands:
         save_processed_dataframe(dataframe=processed_dataframe, output_path=output_path)
 
         console.print(f"[bold green]Saved baseline cleaned data to:[/bold green] {output_path}")
+
+    def train_bertweet(self) -> None:
+        """Train BERTweet classifier with PyTorch Lightning."""
+        config = load_config(
+            overrides=[
+                "model=bertweet",
+                "training=bertweet",
+                "preprocessing=bertweet",
+            ]
+        )
+
+        input_path = Path(config.data.processed_dir) / config.data.train_folds_clean_file
+
+        if not input_path.exists():
+            message = (
+                f"Input file `{input_path}` does not exist. "
+                "Run `uv run disaster-tweet prepare-clean-data` first."
+            )
+            raise FileNotFoundError(message)
+
+        metrics = train_transformer_model(config=config, data_path=input_path)
+
+        console.print("[bold green]BERTweet model trained successfully.[/bold green]")
+        console.print(metrics)
 
 
 def main() -> None:
