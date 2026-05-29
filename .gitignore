@@ -32,7 +32,10 @@ artifacts/models/*
 artifacts/submissions/*
 !artifacts/submissions/*.dvc
 !artifacts/submissions/.gitignore
-!artifacts/submissions/.gitkeepы
+!artifacts/submissions/.gitkeep
+
+artifacts/predictions/*
+!artifacts/predictions/.gitkeep
 
 # Plots
 plots/*
