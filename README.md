@@ -343,7 +343,7 @@ For higher throughput production inference, possible extensions include:
 
 Minimal verification sequence:
 
-    git clone <REPOSITORY_URL>
+    git clone git@github.com:goraperyan/disaster-tweet-classifier.git
     cd disaster-tweet-classifier
     uv sync
     uv run pre-commit install
@@ -363,7 +363,7 @@ This project uses `uv` for dependency management.
 
 ### 11.1 Clone Repository
 
-    git clone <REPOSITORY_URL>
+    git clone git@github.com:goraperyan/disaster-tweet-classifier.git
     cd disaster-tweet-classifier
 
 ### 11.2 Install uv
